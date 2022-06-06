@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <title>Hello</title>
+  </head>
+  <body>
+    <h1>Selamat Datang di Halaman Login</h1>
+    <h4>Form Login</h4>
+
+    <label for="user">Username</label>
+    <input type="text" id="user" name="user" /><br />
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" /><br />
+    <button onclick="PostRequest()">Login</button>
+
+    <a href="{{url_for('register.index')}}"><button>Register</button></a>
+    <div id="res"></div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      function PostRequest() {
+        var user = document.getElementById("user");
+        var password = document.getElementById("password");
+        axios
+          .post("/post", {
+            user: user.value,
+            password: password.value,
+          })
+          .then(function (res) {
+            console.log(res.data.login);
+            res = res.data.login;
+            if (res == true) {
+              window.location.href = "/home/";
+            } else {
+              document.getElementById("res").innerHTML =
+                "Invalid Username/Password";
+            }
+          })
+          .catch((err) => console.error(err));
+      }
+    </script>
+  </body>
+</html>

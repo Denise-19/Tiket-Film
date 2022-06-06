@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="./static/script.js"></script>
+    <title>Hello</title>
+  </head>
+  <body>
+    <h1>Selamat Datang di Halaman Register</h1>
+    <h4>Form Register</h4>
+    <form action="" method="post">
+        <label for="user">Username :</label>
+        <input type="text" id="user" name="user"><br>
+        <label for="email">email :</label>
+        <input type="text" id="email" name="email"><br>
+        <label for="password">Password :</label>
+        <input type="password" id="password" name="password"><br>
+    </form>
+    <a href="/"><button> Login</button></a></br>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function Submit() {
+            var user = document.getElementById("user");
+            var email = document.getElementById("email");
+            var password = document.getElementById("password");
+            
+            axios
+                .post('/register/post', {
+                    user: user.value,
+                    email: email.value,
+                    password: password.value
+                    
+                })
+                .then(window.location.reload())
+                .catch(err => console.error(err));
+        }
+
+    </script>
+</body>
+</html>

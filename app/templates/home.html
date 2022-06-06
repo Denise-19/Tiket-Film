@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Bootstrap CSS 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+    <title>Hello</title>
+  </head>
+  <body>
+
+      <h1>Selamat Datang
+          {% if name %}{{name}}{% endif %}
+          di Halaman Profile</h1>
+    <br>
+    <a href="{{ url_for('home.logout') }}"><button>Logout</button></a>
+    <br><br>
+    <div class="btn-group"> 
+       
+            <form action="" enctype="multipart/form-data" method="post">
+
+    <div id="data">
+        <input type="text" id="input">
+        <label for="">Input Data</label>
+                        <select id="select" class="dropdown">
+                            <option value="string" name="string">String</option>
+                            <option value="integer" name="integer">Integer</option>
+                            <option value="boolean" name="boolean">Boolean</option>
+                        </select>
+        <button onclick="sendData()">send data</button>
+        <button onclick="getData()">get data</button><br>
+        <label for="">Input File</label>
+        <input type="file" id="file" name="file" value="">
+        <button onclick="upFile()">upload</button>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+    <script>
+        function sendData() {
+            var input = document.getElementById("input")
+            var select = document.getElementById("select")
+            axios
+                .post('/home/post',{
+                    input : input.value,
+                    select : select.value
+                })
+                .then(res => showData(res))
+                .catch(err => console.error(err));
+        }
+
+
+        function getData() {
+            axios
+                .get('/home/get', {
+                  timeout: 5000
+                })
+                .then(function (response) {
+                    _data = response.data;
+                    document.getElementById('data').innerHTML =`<div><pre>${JSON.stringify(_data, null, 2)}</pre></div>`;
+                })
+        }
+
+        function showData(res) {
+          document.getElementById('res').innerHTML = `
+            <div></div>
+            <div><pre>${JSON.stringify(res.data, null, 2)}</pre></div>`;
+        }
+
+        function upFile() {
+            var data = new FormData();
+            data.append('file', document.getElementById('file').files[0]);
+            axios
+            .put('/put', data)
+            .then(function (res) {
+                console.log(res)
+                })
+        }
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  </body>
+</html>
